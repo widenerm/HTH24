@@ -158,11 +158,11 @@
             // Add rooms to the grid in tower shape
             const uniqueRooms = {};
 
-            // Inside your populateRooms function, after determining occupancy
             classSchedules.forEach(schedule => {
+                console.log("Processing schedule:", schedule);
                 const roomNumber = schedule.room;
                 if (!uniqueRooms[roomNumber]) {
-                    uniqueRooms[roomNumber] = { room: roomNumber, occupied: false, course_title: null}; // Include course_title here
+                    uniqueRooms[roomNumber] = { room: roomNumber, occupied: false, course_title: '' };
                 }
 
                 // Check if the room is occupied at the selected time and day
@@ -174,7 +174,7 @@
                         // Check if the current time falls within the class schedule
                         if (currentTime >= startHour * 60 + startMinute && currentTime < endHour * 60 + endMinute) {
                             uniqueRooms[roomNumber].occupied = true; // Mark room as occupied
-                            uniqueRooms[roomNumber].course_title = period.course_title; // Assign the course title
+                            uniqueRooms[roomNumber].course_title = schedule.course_title; // Assign the course title
                             console.log(`Room: ${roomNumber}, Course Title: ${uniqueRooms[roomNumber].course_title}`); // Debugging
                             break;
                         }
@@ -190,6 +190,7 @@
                     roomDiv.className = 'room' + (uniqueRooms[roomNumber].occupied ? ' occupied' : '');
                     roomDiv.dataset.room = roomNumber;
                     roomDiv.textContent = `Room ${roomNumber}`;
+
 
                     // Add click event listener for room interaction
                     roomDiv.addEventListener('click', () => handleRoomClick(uniqueRooms[roomNumber]));
@@ -215,7 +216,7 @@
             const occupantNameSpan = document.getElementById('occupant-name');
 
             // Show appropriate message based on the room state
-            if (room.occupied) {
+            if (room.occupied && room.course_title) {
                 occupantNameSpan.textContent = `Occupied by: ${room.course_title}`; // Display course title if occupied
             } else {
                 occupantNameSpan.textContent = "Available"; // Show available message
@@ -232,8 +233,12 @@
                 const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
                 roomDiv.classList.add('occupied'); // Change room color to maroon
 
-        // Update room text with course details if the room is occupied
-                roomDiv.textContent = `Room ${currentRoom.room} (Occupied by: ${currentRoom.course_title})`;
+                // Update room text with course details if the room is occupied
+                if (currentRoom.course_title) {
+                    roomDiv.textContent = `Room ${currentRoom.room} (${currentRoom.course_title})`;
+                } else {
+                    roomDiv.textContent = `Room ${currentRoom.room} (Occupied)`;
+                }
                 document.getElementById('modal').style.display = 'none'; // Hide modal
                 populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Refresh room states
             }
@@ -244,11 +249,12 @@
             if (currentRoom) {
                 const occupantName = prompt("Please enter your name:");
                 currentRoom.occupied = true; // Mark room as occupied
+                currentRoom.course_title = `${occupantName} - Studying`; // Set course_title for studying
                 const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
                 roomDiv.classList.add('occupied'); // Change room color to maroon
         
-        // Update room text with occupant's name and course title
-                roomDiv.textContent = `Room ${currentRoom.room} (Occupied by: ${occupantName}, Class: ${currentRoom.course_title})`;
+                // Update room text with occupant's name and course title
+                roomDiv.textContent = `Room ${currentRoom.room} (${currentRoom.course_title})`;
                 document.getElementById('modal').style.display = 'none'; // Hide modal
                 populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Refresh room states
             }
@@ -278,4 +284,5 @@
     </script>
 </body>
 </html>
+
 
