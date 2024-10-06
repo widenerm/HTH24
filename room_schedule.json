@@ -1,0 +1,792 @@
+[
+    {
+        "room": 107,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "1:00 PM",
+                "end": "1:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 107,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 102,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "10:30 AM",
+                "end": "11:45 AM"
+            }
+        ]
+    },
+    {
+        "room": 230,
+        "days": "MW",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "5:00 PM",
+                "end": "5:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "4:00 PM",
+                "end": "4:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "6:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "5:00 PM",
+                "end": "5:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 229,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "9:00 AM",
+                "end": "10:15 AM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "5:00 PM",
+                "end": "5:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "M",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "6:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "M",
+        "schedule": [
+            {
+                "start": "5:00 PM",
+                "end": "5:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "6:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "5:00 PM",
+                "end": "5:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 123,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "1:00 PM",
+                "end": "1:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 229,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "1:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 230,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "1:30 PM",
+                "end": "2:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 102,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "4:30 PM",
+                "end": "5:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 102,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "10:00 AM",
+                "end": "10:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "9:00 AM",
+                "end": "10:15 AM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "10:30 AM",
+                "end": "11:45 AM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 103,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 230,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "9:00 AM",
+                "end": "10:15 AM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 229,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 104,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "11:00 AM",
+                "end": "11:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 102,
+        "days": "MW",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 229,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "1:30 PM",
+                "end": "2:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "1:30 PM",
+                "end": "2:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 214,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "10:30 AM",
+                "end": "11:45 AM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "1:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 204,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "1:30 PM",
+                "end": "2:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 214,
+        "days": "Tu",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "5:25 PM"
+            }
+        ]
+    },
+    {
+        "room": 214,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "5:25 PM"
+            }
+        ]
+    },
+    {
+        "room": 204,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "1:30 PM",
+                "end": "2:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 229,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "10:30 AM",
+                "end": "11:45 AM"
+            }
+        ]
+    },
+    {
+        "room": 230,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "1:30 PM"
+            }
+        ]
+    },
+    {
+        "room": 230,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "1:30 PM"
+            }
+        ]
+    },
+    {
+        "room": 107,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "12:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 107,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "9:00 AM",
+                "end": "9:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "4:00 PM"
+            }
+        ]
+    },
+    {
+        "room": 204,
+        "days": "MW",
+        "schedule": [
+            {
+                "start": "5:30 PM",
+                "end": "8:30 PM"
+            }
+        ]
+    },
+    {
+        "room": 215,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "1:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 107,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "1:30 PM",
+                "end": "2:45 PM"
+            }
+        ]
+    },
+    {
+        "room": 215,
+        "days": "M",
+        "schedule": [
+            {
+                "start": "1:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 215,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "11:00 AM",
+                "end": "12:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 302,
+        "days": "M",
+        "schedule": [
+            {
+                "start": "10:00 AM",
+                "end": "10:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 302,
+        "days": "M",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 107,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "10:30 AM",
+                "end": "11:45 AM"
+            }
+        ]
+    },
+    {
+        "room": 311,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "10:00 AM",
+                "end": "11:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 311,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "1:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 302,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "1:00 PM",
+                "end": "2:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 311,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "10:00 AM",
+                "end": "11:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 302,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "10:00 AM",
+                "end": "11:50 AM"
+            }
+        ]
+    },
+    {
+        "room": 311,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 302,
+        "days": "F",
+        "schedule": [
+            {
+                "start": "2:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 107,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 125,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 204,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 205,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 214,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 215,
+        "days": "Th",
+        "schedule": [
+            {
+                "start": "6:00 PM",
+                "end": "7:15 PM"
+            }
+        ]
+    },
+    {
+        "room": 311,
+        "days": "TuTh",
+        "schedule": [
+            {
+                "start": "10:30 AM",
+                "end": "11:45 AM"
+            }
+        ]
+    },
+    {
+        "room": 311,
+        "days": "W",
+        "schedule": [
+            {
+                "start": "3:00 PM",
+                "end": "3:50 PM"
+            }
+        ]
+    },
+    {
+        "room": 302,
+        "days": "MWF",
+        "schedule": [
+            {
+                "start": "12:00 PM",
+                "end": "12:50 PM"
+            }
+        ]
+    }
+]
