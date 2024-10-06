@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Occupancy</title>
+    <title>Boston College Room Occupancy</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,8 +23,10 @@
         .grid-container {
             display: grid;
             grid-template-columns: repeat(4, 100px);
-            grid-template-rows: repeat(6, 100px);
+            grid-template-rows: repeat(3, 100px);
             gap: 10px;
+            grid-auto-flow: column;
+            align-content: end; /* Aligns the grid to the bottom */
         }
 
         .room {
@@ -32,120 +34,248 @@
             justify-content: center;
             align-items: center;
             border: 2px solid #333;
-            background-color: gold;
-            color: white;
+            background-color: gold; /* Unoccupied color */
+            color: black;
             cursor: pointer;
             position: relative;
+            font-size: 20px;
+            height: 100px; /* Fixed height for room representation */
         }
 
         .room.occupied {
-            background-color: maroon;
+            background-color: maroon; /* Occupied color */
         }
 
-        .dropdown {
+        .selector-container {
+            margin: 20px;
+        }
+
+        .time-selector,
+        .day-selector {
+            margin-bottom: 10px;
+        }
+
+        /* Modal styles */
+        #modal {
             display: none;
-            position: absolute;
-            top: 100%;
+            position: fixed;
+            z-index: 1;
             left: 0;
-            background-color: white;
-            border: 1px solid #ccc;
-            z-index: 100;
+            top: 0;
             width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
         }
 
-        .dropdown button {
-            width: 100%;
-            padding: 8px;
-            background: none;
-            border: none;
+        #modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
             cursor: pointer;
-            text-align: left;
-        }
-
-        .dropdown button:hover {
-            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
-    <h1>245 Beacon St</h1>
-    <div class="grid-container">
-        <!-- Floor 1 (101-108) -->
-        <div class="room" data-room="101">101</div>
-        <div class="room" data-room="102">102</div>
-        <div class="room" data-room="103">103</div>
-        <div class="room" data-room="104">104</div>
-        <div class="room" data-room="105">105</div>
-        <div class="room" data-room="106">106</div>
-        <div class="room" data-room="107">107</div>
-        <div class="room" data-room="108">108</div>
-        <!-- Floor 2 (201-208) -->
-        <div class="room" data-room="201">201</div>
-        <div class="room" data-room="202">202</div>
-        <div class="room" data-room="203">203</div>
-        <div class="room" data-room="204">204</div>
-        <div class="room" data-room="205">205</div>
-        <div class="room" data-room="206">206</div>
-        <div class="room" data-room="207">207</div>
-        <div class="room" data-room="208">208</div>
-        <!-- Floor 3 (301-308) -->
-        <div class="room" data-room="301">301</div>
-        <div class="room" data-room="302">302</div>
-        <div class="room" data-room="303">303</div>
-        <div class="room" data-room="304">304</div>
-        <div class="room" data-room="305">305</div>
-        <div class="room" data-room="306">306</div>
-        <div class="room" data-room="307">307</div>
-        <div class="room" data-room="308">308</div>
+    <h1>Boston College Room Occupancy</h1>
+    <div class="selector-container">
+        <div class="time-selector">
+            <label for="time">Select Time: </label>
+            <input type="time" id="time" value="12:00">
+        </div>
+        <div class="day-selector">
+            <label for="day">Select Day: </label>
+            <select id="day">
+                <option value="Su">Sunday</option>
+                <option value="M">Monday</option>
+                <option value="Tu">Tuesday</option>
+                <option value="W">Wednesday</option>
+                <option value="Th">Thursday</option>
+                <option value="F">Friday</option>
+                <option value="Sa" selected>Saturday</option>
+            </select>
+        </div>
+    </div>
+    <div class="grid-container" id="room-grid">
+        <!-- Rooms will be populated here -->
+    </div>
+
+    <!-- Modal for class info -->
+    <div id="modal">
+        <div id="modal-content">
+            <span class="close" id="back-button">&times;</span>
+            <p id="modal-message"><span id="occupant-name"></span></p>
+            <button id="occupy-button">Occupy Room</button>
+            <button id="studying-button">Studying</button>
+        </div>
     </div>
 
     <script>
-        document.querySelectorAll('.room').forEach(room => {
-            room.addEventListener('click', function() {
-                let dropdown = this.querySelector('.dropdown');
-                if (!dropdown) {
-                    dropdown = document.createElement('div');
-                    dropdown.classList.add('dropdown');
-                    dropdown.innerHTML = `
-                        <button onclick="claimRoom('${this.dataset.room}')">Claim Room</button>
-                        <button onclick="reportOccupied('${this.dataset.room}')">Report Occupied</button>
-                        <button onclick="reportEmpty('${this.dataset.room}')">Report Room Empty</button>
-                        <button onclick="sendMessage('${this.dataset.room}')">Send Message to Friends</button>
-                    `;
-                    this.appendChild(dropdown);
-                }
-                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-            });
-        });
+        let classSchedules = []; // This will hold the JSON data
+        let currentRoom = null; // Current room being interacted with
 
-        function claimRoom(room) {
-            const roomElement = document.querySelector(`[data-room="${room}"]`);
-            if (roomElement.classList.contains('occupied')) {
-                alert(`Room ${room} is already occupied! You cannot claim it.`);
-            } else {
-                alert(`You have claimed room ${room}.`);
-                roomElement.classList.add('occupied');
-                roomElement.style.backgroundColor = 'maroon';
+        // Function to fetch the JSON data
+        async function fetchRoomData() {
+            try {
+                const response = await fetch('/room_schedule.json'); // Adjust the path as necessary
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                classSchedules = await response.json(); // Parse JSON data
+                populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Populate rooms after fetching
+            } catch (error) {
+                console.error('Error fetching room data:', error);
             }
         }
 
-        function reportOccupied(room) {
-            alert(`Room ${room} reported as occupied.`);
-            const roomElement = document.querySelector(`[data-room="${room}"]`);
-            roomElement.classList.add('occupied');
-            roomElement.style.backgroundColor = 'maroon';
+        // Function to populate rooms
+        function populateRooms(selectedTime, selectedDay) {
+            const roomGrid = document.getElementById('room-grid');
+            roomGrid.innerHTML = ''; // Clear previous room elements
+
+            // Get the current time's hours and minutes
+            const [selectedHour, selectedMinute] = selectedTime.split(':').map(Number);
+            const currentTime = selectedHour * 60 + selectedMinute; // Convert to minutes for easier comparison
+
+            // Add rooms to the grid in tower shape
+            const uniqueRooms = {};
+
+            // Inside your populateRooms function, after determining occupancy
+            classSchedules.forEach(schedule => {
+                const roomNumber = schedule.room;
+                if (!uniqueRooms[roomNumber]) {
+                    uniqueRooms[roomNumber] = { room: roomNumber, occupied: false, course_title: null}; // Include course_title here
+                }
+
+                // Check if the room is occupied at the selected time and day
+                if (schedule.days.includes(selectedDay)) {
+                    for (const period of schedule.schedule) {
+                        const [startHour, startMinute] = convertTimeToMinutes(period.start);
+                        const [endHour, endMinute] = convertTimeToMinutes(period.end);
+
+                        // Check if the current time falls within the class schedule
+                        if (currentTime >= startHour * 60 + startMinute && currentTime < endHour * 60 + endMinute) {
+                            uniqueRooms[roomNumber].occupied = true; // Mark room as occupied
+                            uniqueRooms[roomNumber].course_title = period.course_title; // Assign the course title
+                            console.log(`Room: ${roomNumber}, Course Title: ${uniqueRooms[roomNumber].course_title}`); // Debugging
+                            break;
+                        }
+                    }
+                }
+            });
+
+            // Unique room numbers organized by floor
+            const roomOrder = ['102', '103', '104', '107', '123', '125', '204', '205', '214', '215', '229', '230', '302', '311']; // Example order
+            roomOrder.forEach(roomNumber => {
+                if (uniqueRooms[roomNumber]) {
+                    const roomDiv = document.createElement('div');
+                    roomDiv.className = 'room' + (uniqueRooms[roomNumber].occupied ? ' occupied' : '');
+                    roomDiv.dataset.room = roomNumber;
+                    roomDiv.textContent = `Room ${roomNumber}`;
+
+                    // Add click event listener for room interaction
+                    roomDiv.addEventListener('click', () => handleRoomClick(uniqueRooms[roomNumber]));
+                    
+                    roomGrid.appendChild(roomDiv);
+                }
+            });
         }
 
-        function reportEmpty(room) {
-            alert(`Room ${room} reported as empty.`);
-            const roomElement = document.querySelector(`[data-room="${room}"]`);
-            roomElement.classList.remove('occupied');
-            roomElement.style.backgroundColor = 'gold';
+        // Convert time string to minutes
+        function convertTimeToMinutes(time) {
+            const [timeString, modifier] = time.split(' ');
+            let [hours, minutes] = timeString.split(':').map(Number);
+
+            if (modifier === 'PM' && hours < 12) hours += 12;
+            if (modifier === 'AM' && hours === 12) hours = 0;
+
+            return [hours, minutes];
+        }
+        function handleRoomClick(room) {
+            currentRoom = room; // Set the current room
+            const modal = document.getElementById('modal');
+            const occupantNameSpan = document.getElementById('occupant-name');
+
+            // Show appropriate message based on the room state
+            if (room.occupied) {
+                occupantNameSpan.textContent = `Occupied by: ${room.course_title}`; // Display course title if occupied
+            } else {
+                occupantNameSpan.textContent = "Available"; // Show available message
+            }
+
+            modal.style.display = 'block'; // Show modal
         }
 
-        function sendMessage(room) {
-            alert(`Message sent to friends to go to room ${room}.`);
+
+        // Function to handle occupying the room
+        function handleOccupyRoom() {
+            if (currentRoom) {
+                currentRoom.occupied = true; // Mark room as occupied
+                const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
+                roomDiv.classList.add('occupied'); // Change room color to maroon
+
+        // Update room text with course details if the room is occupied
+                roomDiv.textContent = `Room ${currentRoom.room} (Occupied by: ${currentRoom.course_title})`;
+                document.getElementById('modal').style.display = 'none'; // Hide modal
+                populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Refresh room states
+            }
         }
+
+        // Function to handle studying in the room
+        function handleStudying() {
+            if (currentRoom) {
+                const occupantName = prompt("Please enter your name:");
+                currentRoom.occupied = true; // Mark room as occupied
+                const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
+                roomDiv.classList.add('occupied'); // Change room color to maroon
+        
+        // Update room text with occupant's name and course title
+                roomDiv.textContent = `Room ${currentRoom.room} (Occupied by: ${occupantName}, Class: ${currentRoom.course_title})`;
+                document.getElementById('modal').style.display = 'none'; // Hide modal
+                populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Refresh room states
+            }
+        }
+
+        // Close modal when clicking the close button
+        document.getElementById('back-button').onclick = function() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Event listener for the time selector
+        document.getElementById('time').addEventListener('change', (event) => {
+            populateRooms(event.target.value, document.getElementById('day').value);
+        });
+
+        // Event listener for the day selector
+        document.getElementById('day').addEventListener('change', (event) => {
+            populateRooms(document.getElementById('time').value, event.target.value);
+        });
+
+        // Event listeners for modal buttons
+        document.getElementById('occupy-button').onclick = handleOccupyRoom;
+        document.getElementById('studying-button').onclick = handleStudying;
+
+        // Fetch room data when the page loads
+        window.onload = fetchRoomData;
     </script>
 </body>
 </html>
+
