@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Boston College Social Page</title>
+    
+    <link type="image/x-icon" rel="icon" href="https://services.bc.edu/assets/images/icons/favicon.ico">
+    <link href="/nidp/images/assets/css/base01.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .add-buddy {
+            margin-bottom: 20px;
+        }
+
+        .buddy-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .buddy-profile {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .buddy-profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .buddy-profile h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .buddy-profile p {
+            color: #666;
+        }
+
+        .buddy-profile button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .buddy-profile button:hover {
+            background-color: #e55347;
+        }
+
+        .login-box, .register-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .login-box input, .register-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box button, .register-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-box button:hover, .register-box button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .show {
+            visibility: visible;
+        }
+    </style>
+
+    <script type="text/javascript" src="/nidp/images/assets/js/jquery-2.1.4.min.js"></script>
+
+</head>
+
+<body>
+
+    <h1>Add Buddies to Your Social Page</h1>
+    <div class="container">
+        <div class="login-box">
+            <h2>Log In</h2>
+            <div id="error" class="error"></div>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="login()">Log In</button>
+        </div>
+
+        <div class="register-box">
+            <h2>Register New User</h2>
+            <input type="text" id="newUsername" placeholder="New Username">
+            <input type="password" id="newPassword" placeholder="New Password">
+            <button onclick="registerUser()">Register</button>
+        </div>
+
+        <div class="add-buddy">
+            <input type="text" id="buddyName" placeholder="Enter buddy's name">
+            <input type="text" id="buddyAccount" placeholder="Enter buddy's account">
+            <button onclick="addBuddy()">Add Buddy</button>
+        </div>
+        
+        <div id="buddyList" class="buddy-list">
+            <!-- Buddy profiles will show up here -->
+        </div>
+    </div>
+
+    <script>
+        // Users data for login
+        const users = {}; // Store registered users
+
+        let loggedInUser = '';
+
+        // Register a new user
+        function registerUser() {
+            const newUsername = document.getElementById('newUsername').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const error = document.getElementById('error');
+
+            // Check if username already exists
+            if (newUsername in users) {
+                error.textContent = 'Username already exists. Please choose a different username.';
+                return;
+            }
+
+            // Register new user
+            users[newUsername] = newPassword;
+            error.textContent = 'Registration successful! You can now log in.';
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const error = document.getElementById('error');
+
+            if (users[username] && users[username] === password) {
+                error.textContent = '';
+                loggedInUser = username; // Save the logged-in username
+                alert("Login successful!");
+                displayUsername(); // Display the username on the social page
+            } else {
+                error.textContent = 'Incorrect username or password';
+            }
+        }
+
+        // Display the logged-in user's name on the social page
+        function displayUsername() {
+            const header = document.querySelector('h1');
+            header.textContent = `Welcome, ${loggedInUser}! Add Buddies to Your Social Page`;
+            // Hide the login box after a successful login
+            document.querySelector('.login-box').style.display = 'none';
+        }
+
+        // Function to add buddy profile
+        function addBuddy() {
+            const buddyName = document.getElementById('buddyName').value;
+            const buddyAccount = document.getElementById('buddyAccount').value;
+
+            if (buddyName && buddyAccount && loggedInUser) { // Ensure user is logged in
+                const buddyProfile = document.createElement('div');
+                buddyProfile.classList.add('buddy-profile');
+
+                const buddyImg = document.createElement('img');
+                buddyImg.src = 'https://via.placeholder.com/100';
+                buddyProfile.appendChild(buddyImg);
+
+                const buddyTitle = document.createElement('h3');
+                buddyTitle.textContent = buddyName;
+                buddyProfile.appendChild(buddyTitle);
+
+                const buddyAccountP = document.createElement('p');
+                buddyAccountP.textContent = `Account: ${buddyAccount}`;
+                buddyProfile.appendChild(buddyAccountP);
+
+                const buddyAddedBy = document.createElement('p');
+                buddyAddedBy.textContent = `Added by: ${loggedInUser}`; // Show who added the buddy
+                buddyProfile.appendChild(buddyAddedBy);
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove Buddy';
+                removeButton.onclick = function() {
+                    buddyProfile.remove();
+                };
+                buddyProfile.appendChild(removeButton);
+
+                document.getElementById('buddyList').appendChild(buddyProfile);
+
+                document.getElementById('buddyName').value = '';
+                document.getElementById('buddyAccount').value = '';
+            } else {
+                alert("Please enter both a buddy's name and account, and ensure you are logged in.");
+            }
+        }
+    </script>
+
+</body>
+</html>
