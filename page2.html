@@ -237,36 +237,37 @@
 
 
         // Function to handle occupying the room
-        function handleOccupyRoom() {
+            function handleOccupyRoom() {
             if (currentRoom) {
-                currentRoom.occupied = true; // Mark room as occupied
+                currentRoom.occupied = true;
                 const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
-                roomDiv.classList.add('occupied'); // Change room color to maroon
-
-                // Update room text with course details if the room is occupied
-                if (currentRoom.course_title) {
-                    roomDiv.textContent = `Room ${currentRoom.room} (${currentRoom.course_title})`;
-                } else {
-                    roomDiv.textContent = `Room ${currentRoom.room} (Occupied)`;
-                }
-                document.getElementById('modal').style.display = 'none'; // Hide modal
-                populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Refresh room states
+                roomDiv.classList.add('occupied');
+                roomDiv.textContent = `Room ${currentRoom.room} (Occupied)`;
+                document.getElementById('modal').style.display = 'none';
+                populateRooms(document.getElementById('time').value, document.getElementById('day').value);
             }
         }
 
-        // Function to handle studying in the room
         function handleStudying() {
             if (currentRoom) {
                 const occupantName = prompt("Please enter your name:");
-                currentRoom.occupied = true; // Mark room as occupied
-                currentRoom.course_title = `${occupantName} - Studying`; // Set course_title for studying
-                const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
-                roomDiv.classList.add('occupied'); // Change room color to maroon
-        
-                // Update room text with occupant's name and course title
-                roomDiv.textContent = `Room ${currentRoom.room} (${currentRoom.course_title})`;
-                document.getElementById('modal').style.display = 'none'; // Hide modal
-                populateRooms(document.getElementById('time').value, document.getElementById('day').value); // Refresh room states
+                if (occupantName) {
+                    currentRoom.occupied = true;
+                    currentRoom.course_title = `${occupantName} - Studying`;
+                    const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
+                    roomDiv.classList.add('occupied');
+                    roomDiv.textContent = `Room ${currentRoom.room})`;
+                    document.getElementById('modal').style.display = 'none';
+                    
+                    // Update the room data in the uniqueRooms array
+                    const roomIndex = uniqueRooms.findIndex(room => room.room === currentRoom.room);
+                    if (roomIndex !== -1) {
+                        uniqueRooms[roomIndex] = currentRoom;
+                    }
+                    
+                    // Re-populate the rooms to reflect the changes
+                    populateRooms(document.getElementById('time').value, document.getElementById('day').value);
+                }
             }
         }
 
