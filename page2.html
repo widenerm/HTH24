@@ -92,6 +92,13 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Center the buttons */
+        #occupy-button,
+        #studying-button {
+            display: inline-block;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
@@ -191,7 +198,6 @@
                     roomDiv.dataset.room = roomNumber;
                     roomDiv.textContent = `Room ${roomNumber}`;
 
-
                     // Add click event listener for room interaction
                     roomDiv.addEventListener('click', () => handleRoomClick(uniqueRooms[roomNumber]));
                     
@@ -218,8 +224,12 @@
             // Show appropriate message based on the room state
             if (room.occupied && room.course_title) {
                 occupantNameSpan.textContent = `Occupied by: ${room.course_title}`; // Display course title if occupied
+                document.getElementById('occupy-button').style.display = 'none'; // Hide occupy button
+                document.getElementById('studying-button').style.display = 'none'; // Hide studying button
             } else {
                 occupantNameSpan.textContent = "Available"; // Show available message
+                document.getElementById('occupy-button').style.display = 'inline-block'; // Show occupy button
+                document.getElementById('studying-button').style.display = 'inline-block'; // Show studying button
             }
 
             modal.style.display = 'block'; // Show modal
