@@ -237,13 +237,25 @@
 
 
         // Function to handle occupying the room
-            function handleOccupyRoom() {
+        function handleOccupyRoom() {
             if (currentRoom) {
                 currentRoom.occupied = true;
+                currentRoom.course_title = "";
                 const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
                 roomDiv.classList.add('occupied');
-                roomDiv.textContent = `Room ${currentRoom.room} (Occupied)`;
+                roomDiv.textContent = `Room ${currentRoom.room}`;
+                roomDiv.style.display = 'flex';
+                roomDiv.style.justifyContent = 'center';
+                roomDiv.style.alignItems = 'center';
                 document.getElementById('modal').style.display = 'none';
+                
+                // Update the room data in the uniqueRooms array
+                const roomIndex = uniqueRooms.findIndex(room => room.room === currentRoom.room);
+                if (roomIndex !== -1) {
+                    uniqueRooms[roomIndex] = currentRoom;
+                }
+                
+                // Re-populate the rooms to reflect the changes
                 populateRooms(document.getElementById('time').value, document.getElementById('day').value);
             }
         }
@@ -256,7 +268,10 @@
                     currentRoom.course_title = `${occupantName} - Studying`;
                     const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
                     roomDiv.classList.add('occupied');
-                    roomDiv.textContent = `Room ${currentRoom.room})`;
+                    roomDiv.textContent = `Room ${currentRoom.room}`;
+                    roomDiv.style.display = 'flex';
+                    roomDiv.style.justifyContent = 'center';
+                    roomDiv.style.alignItems = 'center';
                     document.getElementById('modal').style.display = 'none';
                     
                     // Update the room data in the uniqueRooms array
