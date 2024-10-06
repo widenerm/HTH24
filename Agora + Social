@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Boston College Login & Social Page</title>
+    
+    <!-- External Links -->
+    <link type="image/x-icon" rel="icon" href="https://services.bc.edu/assets/images/icons/favicon.ico">
+    <link href="/nidp/images/assets/css/base01.css" rel="stylesheet">
+    
+    <!-- CSS from the second file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .add-peer {
+            margin-bottom: 20px;
+        }
+
+        .peer-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .peer-profile {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .peer-profile img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .peer-profile h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .peer-profile p {
+            color: #666;
+        }
+
+        .peer-profile button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .peer-profile button:hover {
+            background-color: #e55347;
+        }
+
+        /* Login window styling */
+        .login-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            visibility: hidden;
+        }
+
+        .login-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-box button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .show {
+            visibility: visible;
+        }
+    </style>
+
+    <script type="text/javascript" src="/nidp/images/assets/js/jquery-2.1.4.min.js"></script>
+
+</head>
+
+<body onload="document.IDPLogin.Ecom_User_ID.focus(); showLoginWindow();">
+
+    <!-- Emergency Banner (if applicable) -->
+    <div id="emergency" style="display: none;">
+        <div id="text" class="container-fluid"></div>
+    </div>
+
+    <!-- Boston College Login Form -->
+    <section class="login">
+        <form id="fm1" name="IDPLogin" enctype="application/x-www-form-urlencoded" method="POST" action="https://login.bc.edu/nidp/idff/sso?sid=0&amp;sid=0" autocomplete="off">
+            <input type="hidden" name="option" value="credential">
+            <input type="hidden" name="target" value="https://services.bc.edu/commoncore/myservices.do">
+
+            <div id="mainLogo"><a href="https://www.bc.edu/" class="logo">
+                <img src="/nidp/images/assets/image/logo-alt2.png" alt="Boston College logo"></a>
+            </div>
+
+            <h1>Sign in to continue</h1>
+
+            <label for="username">Username:</label>
+            <input id="username" autocapitalize="none" aria-labelledby="username" type="text" class="smalltext" value="" name="Ecom_User_ID" placeholder="Username" required tabindex="1" size="25">
+
+            <label for="password">Password:</label>
+            <input id="password" name="Ecom_Password" placeholder="Password" required tabindex="2" type="password" size="25">
+
+            <button class="btn custom" type="submit" value="LOGIN" tabindex="4">Sign in</button>
+        </form>
+    </section>
+
+    <!-- Social Page -->
+    <h1>Add Peers to Your Social Page</h1>
+    <div class="container">
+        <div class="add-peer">
+            <input type="text" id="peerName" placeholder="Enter peer's name">
+            <input type="text" id="peerAccount" placeholder="Enter peer's account">
+            <button onclick="addPeer()">Add Peer</button>
+        </div>
+        
+        <div id="peerList" class="peer-list">
+            <!-- Peer profiles will show up here -->
+        </div>
+    </div>
+
+    <!-- Login window -->
+    <div id="loginWindow" class="login-window">
+        <div class="login-box">
+            <h2>Log In</h2>
+            <div id="error" class="error"></div>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">Log In</button>
+        </div>
+    </div>
+
+    <script>
+        // Users data for login (sample users)
+        const users = {
+            'johnDoe': 'password123',
+            'janeSmith': 'mypassword'
+        };
+
+        // Function to show login window
+        function showLoginWindow() {
+            document.getElementById('loginWindow').classList.add('show');
+        }
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const error = document.getElementById('error');
+
+            if (users[username] && users[username] === password) {
+                error.textContent = '';
+                alert("Login successful!");
+                document.getElementById('loginWindow').classList.remove('show');
+            } else {
+                error.textContent = 'Incorrect username or password';
+            }
+        }
+
+        // Function to add peer profile
+        function addPeer() {
+            const peerName = document.getElementById('peerName').value;
+            const peerAccount = document.getElementById('peerAccount').value;
+
+            if (peerName && peerAccount) {
+                const peerProfile = document.createElement('div');
+                peerProfile.classList.add('peer-profile');
+
+                const peerImg = document.createElement('img');
+                peerImg.src = 'https://via.placeholder.com/100';
+                peerProfile.appendChild(peerImg);
+
+                const peerTitle = document.createElement('h3');
+                peerTitle.textContent = peerName;
+                peerProfile.appendChild(peerTitle);
+
+                const peerAccountP = document.createElement('p');
+                peerAccountP.textContent = `Account: ${peerAccount}`;
+                peerProfile.appendChild(peerAccountP);
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove Peer';
+                removeButton.onclick = function() {
+                    peerProfile.remove();
+                };
+                peerProfile.appendChild(removeButton);
+
+                document.getElementById('peerList').appendChild(peerProfile);
+
+                document.getElementById('peerName').value = '';
+                document.getElementById('peerAccount').value = '';
+            } else {
+                alert("Please enter both a peer's name and account
