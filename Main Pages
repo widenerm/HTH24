@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Occupancy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            grid-template-rows: repeat(6, 100px);
+            gap: 10px;
+        }
+
+        .room {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #333;
+            background-color: gold;
+            color: white;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .room.occupied {
+            background-color: maroon;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            border: 1px solid #ccc;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .dropdown button {
+            width: 100%;
+            padding: 8px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .dropdown button:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>245 Beacon St</h1>
+    <div class="grid-container">
+        <!-- Floor 1 (101-108) -->
+        <div class="room" data-room="101">101</div>
+        <div class="room" data-room="102">102</div>
+        <div class="room" data-room="103">103</div>
+        <div class="room" data-room="104">104</div>
+        <div class="room" data-room="105">105</div>
+        <div class="room" data-room="106">106</div>
+        <div class="room" data-room="107">107</div>
+        <div class="room" data-room="108">108</div>
+        <!-- Floor 2 (201-208) -->
+        <div class="room" data-room="201">201</div>
+        <div class="room" data-room="202">202</div>
+        <div class="room" data-room="203">203</div>
+        <div class="room" data-room="204">204</div>
+        <div class="room" data-room="205">205</div>
+        <div class="room" data-room="206">206</div>
+        <div class="room" data-room="207">207</div>
+        <div class="room" data-room="208">208</div>
+        <!-- Floor 3 (301-308) -->
+        <div class="room" data-room="301">301</div>
+        <div class="room" data-room="302">302</div>
+        <div class="room" data-room="303">303</div>
+        <div class="room" data-room="304">304</div>
+        <div class="room" data-room="305">305</div>
+        <div class="room" data-room="306">306</div>
+        <div class="room" data-room="307">307</div>
+        <div class="room" data-room="308">308</div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.room').forEach(room => {
+            room.addEventListener('click', function() {
+                let dropdown = this.querySelector('.dropdown');
+                if (!dropdown) {
+                    dropdown = document.createElement('div');
+                    dropdown.classList.add('dropdown');
+                    dropdown.innerHTML = `
+                        <button onclick="claimRoom('${this.dataset.room}')">Claim Room</button>
+                        <button onclick="reportOccupied('${this.dataset.room}')">Report Occupied</button>
+                        <button onclick="reportEmpty('${this.dataset.room}')">Report Room Empty</button>
+                        <button onclick="sendMessage('${this.dataset.room}')">Send Message to Friends</button>
+                    `;
+                    this.appendChild(dropdown);
+                }
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            });
+        });
+
+        function claimRoom(room) {
+            const roomElement = document.querySelector(`[data-room="${room}"]`);
+            if (roomElement.classList.contains('occupied')) {
+                alert(`Room ${room} is already occupied! You cannot claim it.`);
+            } else {
+                alert(`You have claimed room ${room}.`);
+                roomElement.classList.add('occupied');
+                roomElement.style.backgroundColor = 'maroon';
+            }
+        }
+
+        function reportOccupied(room) {
+            alert(`Room ${room} reported as occupied.`);
+            const roomElement = document.querySelector(`[data-room="${room}"]`);
+            roomElement.classList.add('occupied');
+            roomElement.style.backgroundColor = 'maroon';
+        }
+
+        function reportEmpty(room) {
+            alert(`Room ${room} reported as empty.`);
+            const roomElement = document.querySelector(`[data-room="${room}"]`);
+            roomElement.classList.remove('occupied');
+            roomElement.style.backgroundColor = 'gold';
+        }
+
+        function sendMessage(room) {
+            alert(`Message sent to friends to go to room ${room}.`);
+        }
+    </script>
+</body>
+</html>
