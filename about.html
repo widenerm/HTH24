@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston College Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet"> <!-- Rugged Font -->
+    <style>
+        /* Ensure the html and body take up the full viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif; /* Default font style for the page */
+        }
+        /* Set styles for the top container */
+        .top-container {
+            height: 25%; /* 1/4 of the page */
+            width: 100%;
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center items vertically */
+            align-items: center; /* Center items horizontally */
+            position: relative; /* Position relative for absolute child elements */
+            background-color: #f0f0f0; /* Optional: background color */
+        }
+        /* Set styles for the logo */
+        .logo {
+            max-height: 100px; /* Limit height of the logo */
+            z-index: 2; /* Ensure the logo covers the line */
+            background-color: #f0f0f0; /* Optional background to blend with page */
+        }
+        /* Faint line positioned at the same level as the logo */
+        .line {
+            width: 80%; /* Line width */
+            border-bottom: 2px solid rgba(0, 0, 0, 0.2); /* Faint line with transparency */
+            position: absolute;
+            top: 50%; /* Position the line in the middle of the top container */
+            z-index: 1; /* Place the line behind the logo */
+        }
+        /* Set styles for the buttons */
+        .button {
+            position: absolute; /* Absolute positioning */
+            width: 40px; /* Set a width for the buttons */
+            height: 40px; /* Set a height for the buttons */
+            background-color: #fff; /* White background */
+            cursor: pointer; /* Pointer cursor on hover */
+            padding: 0;
+            border: none; /* Remove any border */
+            border-radius: 50%; /* Make buttons circular */
+        }
+        /* Position the settings button */
+        .settings-button {
+            top: 10px; /* Position from the top */
+            left: 10px; /* Position from the left */
+        }
+        /* Position the profile button */
+        .profile-button {
+            top: 10px; /* Position from the top */
+            right: 10px; /* Position from the right */
+        }
+        /* Set styles for the words */
+        .words {
+            display: flex; /* Use flexbox for layout */
+            justify-content: space-between; /* Space items evenly */
+            width: 60%; /* Limit width of the text */
+            margin-top: -50px; /* Adjust the margin to position the text above the line */
+            font-family: 'Oswald', sans-serif; /* Rugged, bold font */
+            font-size: 48px; /* Increase font size */
+            font-weight: 700; /* Bold font */
+            position: absolute;
+            z-index: 3; /* Ensure the text is above the logo and the line */
+            text-align: center;
+        }
+        /* Set styles for the bottom image */
+        .bottom-image {
+            height: 75%; /* 3/4 of the page */
+            width: 100%;
+            background-image: url('images/BCMap.png');
+            background-size: cover; /* Ensure the image covers the space */
+            background-position: center; /* Center the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-container">
+        <div class="line"></div> <!-- Faint line on the same level as the logo -->
+        <img src="images/BCLogo.png" alt="Boston College Logo" class="logo">
+        <div class="words">
+            <span>Study</span>
+            <span>Together</span>
+        </div>
+        <button class="button settings-button">
+            <img src="images/settings.png" alt="Settings" style="width: 100%; height: 100%; object-fit: cover;">
+        </button> <!-- Settings button with no outline -->
+        <button class="button profile-button">
+            <img src="images/profile.png" alt="Profile" style="width: 100%; height: 100%; object-fit: cover;">
+        </button> <!-- Profile button with no outline -->
+    </div>
+    <div class="bottom-image"></div>
+</body>
+</html>

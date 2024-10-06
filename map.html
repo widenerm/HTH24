@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston College Map</title>
+    <style>
+        /* Ensure the html and body take up the full viewport */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        /* Set styles for the top image container */
+        .top-image {
+            height: 15%; /* 1/4 of the page */
+            width: 100%;
+            display: flex; /* Use flexbox to center the image */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            background-color: white; /* Optional: background color */
+            position: relative; /* Position relative for absolute child elements */
+        }
+        /* Set styles for the top image */
+        .top-image img {
+            max-height: 100%; /* Limit height to container */
+            max-width: 100%; /* Limit width to container */
+            object-fit: contain; /* Scale the image to fit */
+        }
+        /* Set styles for the button */
+        .button {
+            position: absolute; /* Absolute positioning */
+            top: 50%; /* Center vertically */
+            left: 50%; /* Center horizontally */
+            transform: translate(210%, 700%); /* Adjust for center */
+            width: 60px; /* Set a width for the button */
+            height: 60px; /* Set a height for the button */
+            border-radius: 50%; /* Make it circular */
+            background-color: rgba(255, 255, 255, 0); /* Transparent background */
+            border: 2px solid black; /* Black outline */
+            cursor: pointer; /* Pointer cursor on hover */
+            font-size: 16px; /* Font size */
+            display: flex; /* Use flexbox to center any content */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+        /* Set styles for the bottom image */
+        .bottom-image {
+            height: 85%; /* 3/4 of the page */
+            width: 100%;
+            background-image: url('images/BCMap.png');
+            background-size: cover; /* Ensure the image covers the space */
+            background-position: center; /* Center the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-image">
+        <img src="images/BCLogo.png" alt="Boston College Logo">
+        <button class="button"></button> <!-- You can change the button text or use an icon -->
+    </div>
+    <div class="bottom-image"></div>
+</body>
+</html>
