@@ -3,23 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boston College Page</title>
+    <title>Boston College Room Occupancy</title>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet"> <!-- Rugged Font -->
     <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet"> <!-- Rugged, Vintage Font -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        /* Ensure the html and body take up the full viewport */
-        html, body {
-            height: 100%;
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 0;
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif; /* Default font style for the page */
-            position: relative; /* Ensure the positioning is relative for child elements */
         }
 
         body::before {
             content: ''; /* Required for pseudo-element */
-            background-image: url('images/BC.jpeg'); /* Path to your background image */
+            background-image: url('images/245.jpg'); /* Path to your background image */
             background-size: cover; /* Cover the entire background */
             background-position: center; /* Center the background */
             background-repeat: no-repeat; /* Prevent background image from repeating */
@@ -29,7 +30,7 @@
             right: 0; /* Align it to the right */
             bottom: 0; /* Align it to the bottom */
             opacity: 0.5; /* Set the opacity of the background image */
-            z-index: 0; /* Ensure it's below other elements */
+            z-index: -1; /* Ensure it's below other elements */
         }
 
         /* Set styles for the top container */
@@ -39,39 +40,37 @@
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Stack items vertically */
             align-items: center; /* Center items horizontally */
-            position: fixed; /* Change to fixed positioning */
-            top: 0; /* Align to the top of the viewport */
-            left: 0; /* Align to the left of the viewport */
+            position: relative; /* Position relative for absolute child elements */
             background-color: #BC9B6A; /* Optional: background color */
             z-index: 1;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow around the container */
         }
+        
+        /* Pseudo-element for blurry white bottom edge */
+        .top-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 10%; /* Adjust height for the blurry effect */
+            background: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            filter: blur(15px); /* Apply blur */
+            z-index: -1; /* Ensure it stays behind the content */
+        }
 
-/* Pseudo-element for blurry white bottom edge */
-.top-container::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 10%; /* Adjust height for the blurry effect */
-    background: rgba(255, 255, 255, 0.8); /* White background with transparency */
-    filter: blur(15px); /* Apply blur */
-    z-index: -1; /* Ensure it stays behind the content */
-}
-
-/* Pseudo-element for blurry white top edge */
-.top-container::before {
-    content: '';
-    position: absolute;
-    top: 0; /* Position at the top */
-    left: 0;
-    right: 0;
-    height: 14%; /* Adjust height for the blurry effect */
-    background: rgba(255, 255, 255, 0.8); /* White background with transparency */
-    filter: blur(18px); /* Apply blur */
-    z-index: -1; /* Ensure it stays behind the content */
-}
+        /* Pseudo-element for blurry white top edge */
+        .top-container::before {
+            content: '';
+            position: absolute;
+            top: 0; /* Position at the top */
+            left: 0;
+            right: 0;
+            height: 14%; /* Adjust height for the blurry effect */
+            background: rgba(255, 255, 255, 0.8); /* White background with transparency */
+            filter: blur(18px); /* Apply blur */
+            z-index: -1; /* Ensure it stays behind the content */
+        }
         
         /* Set styles for the logo */
         .logo {
@@ -91,7 +90,7 @@
             color: #98002E;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for contrast */
         }
-        
+
         /* Subtitle styles */
         .subtitle {
             font-size: 16px; /* Smaller font size */
@@ -100,13 +99,13 @@
             margin-top: -22px; /* Adjusted position to move it higher */
             color: #98002E;
         }
-        
+
         /* Set styles for the buttons */
         .button {
             position: absolute; /* Absolute positioning */
             width: 60px; /* Increased width for profile button */
             height: 60px; /* Increased height for profile button */
-            background-color: transparent; /* Transparent background */
+            background-color: none /* White background */
             cursor: pointer; /* Pointer cursor on hover */
             padding: 0;
             border: none; /* Remove any border */
@@ -118,56 +117,14 @@
             top: 18px; /* Position from the top */
             right: 45px; /* Position from the right */
         }
-        
 
-        /* Map styles */
-        #map {
-            transform: translate(-50%, -40%); /* Center the map */
-            height: 70%; /* Adjust height to make the map smaller */
-            width: 70%; /* Adjust width to make the map smaller */
-            margin: auto; /* Center the map horizontally */
-            border-radius: 20px; /* Optional: rounded corners */
-            border: 5px solid black; /* Add border */
-            position: absolute; /* Use absolute positioning to center */
-            top: 50%; /* Position from the top */
-            left: 50%; /* Position from the left */
-            z-index: 1; /* Ensure it's above other elements */
-        }
-
-        .bottom-image {
-            height: calc(85% - 60px); /* 3/4 of the page */
-            width: calc(100% - 60px); /* Full width minus padding */
-            margin: 30px; /* Add margin to create space around the image */
-            background-image: url('images/BCMap.png');
-            background-size: cover; /* Ensure the image covers the space */
-            background-position: center; /* Center the image */
-            border-radius: 20px; /* Optional: rounded corners */
-        }
-    </style>
-</head>
-<body>
-    <div class="top-container">
-        <img src="images/BCLogo.png" alt="Boston College Logo" class="logo">
-        <div class="title">Study Together</div>
-        <div class="subtitle">(or by yourself)</div>
-        <!-- Profile button linking to profile.html -->
-        <a href="profile.html" class="button profile-button">
-            <img src="images/profile.png" alt="Profile" style="width: 130%; height: 130%; object-fit: cover;">
-        </a>
-    </div>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
+        .heading {
+            font-weight: 900;
+            font-size: 36px;
+            margin-top: 60px;
+            text-align: center;
+            color: black;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
         }
 
         h1 {
@@ -201,7 +158,8 @@
         }
 
         .selector-container {
-            margin: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
         .time-selector,
@@ -253,9 +211,23 @@
             display: inline-block;
             margin: 10px;
         }
+        
     </style>
 </head>
 <body>
+    <div class="top-container">
+        <a href="index.html">
+            <img src="images/BCLogo.png" alt="Boston College Logo" class="logo">
+        </a>        
+        <div class="title">245 Beacon St</div>
+        <!-- Profile button linking to profile.html -->
+        <a href="profile.html" class="button profile-button">
+            <img src="images/profile.png" alt="Profile" style="width: 130%; height: 130%; object-fit: cover;">
+        </a>
+    </div>
+    <div>
+        <div class="heading">Room Occupancy</div>
+    </div>
     <div class="selector-container">
         <div class="time-selector">
             <label for="time">Select Time: </label>
@@ -306,6 +278,7 @@
             }
         }
 
+        let roomOccupancyStates = {}; // Example structure: { roomNumber: { day: { timeSlot: { occupied: true, course_title: "..." }}}}
         // Function to populate rooms
         function populateRooms(selectedTime, selectedDay) {
             const roomGrid = document.getElementById('room-grid');
@@ -339,6 +312,13 @@
                             break;
                         }
                     }
+                }
+            });
+            // Override with manually occupied rooms for the selected time and day
+            Object.keys(roomOccupancyStates).forEach(room => {
+                if (roomOccupancyStates[room][selectedDay] && roomOccupancyStates[room][selectedDay][selectedTime]) {
+                    uniqueRooms[room].occupied = roomOccupancyStates[room][selectedDay][selectedTime].occupied;
+                    uniqueRooms[room].course_title = roomOccupancyStates[room][selectedDay][selectedTime].course_title;
                 }
             });
 
@@ -390,54 +370,55 @@
 
 
         // Function to handle occupying the room
-        function handleOccupyRoom() {
-            if (currentRoom) {
-                currentRoom.occupied = true;
-                currentRoom.course_title = "";
-                const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
-                roomDiv.classList.add('occupied');
-                roomDiv.textContent = `Room ${currentRoom.room}`;
-                roomDiv.style.display = 'flex';
-                roomDiv.style.justifyContent = 'center';
-                roomDiv.style.alignItems = 'center';
-                document.getElementById('modal').style.display = 'none';
-                
-                // Update the room data in the uniqueRooms array
-                const roomIndex = uniqueRooms.findIndex(room => room.room === currentRoom.room);
-                if (roomIndex !== -1) {
-                    uniqueRooms[roomIndex] = currentRoom;
-                }
-                
-                // Re-populate the rooms to reflect the changes
-                populateRooms(document.getElementById('time').value, document.getElementById('day').value);
-            }
-        }
-
         function handleStudying() {
             if (currentRoom) {
                 const occupantName = prompt("Please enter your name:");
                 if (occupantName) {
-                    currentRoom.occupied = true;
-                    currentRoom.course_title = `${occupantName} - Studying`;
-                    const roomDiv = document.querySelector(`[data-room="${currentRoom.room}"]`);
-                    roomDiv.classList.add('occupied');
-                    roomDiv.textContent = `Room ${currentRoom.room}`;
-                    roomDiv.style.display = 'flex';
-                    roomDiv.style.justifyContent = 'center';
-                    roomDiv.style.alignItems = 'center';
-                    document.getElementById('modal').style.display = 'none';
+                    const selectedDay = document.getElementById('day').value;
+                    const selectedTime = document.getElementById('time').value;
                     
-                    // Update the room data in the uniqueRooms array
-                    const roomIndex = uniqueRooms.findIndex(room => room.room === currentRoom.room);
-                    if (roomIndex !== -1) {
-                        uniqueRooms[roomIndex] = currentRoom;
+                    // Store the manual state in roomOccupancyStates with time and day
+                    if (!roomOccupancyStates[currentRoom.room]) {
+                        roomOccupancyStates[currentRoom.room] = {};
                     }
-                    
-                    // Re-populate the rooms to reflect the changes
-                    populateRooms(document.getElementById('time').value, document.getElementById('day').value);
+                    if (!roomOccupancyStates[currentRoom.room][selectedDay]) {
+                        roomOccupancyStates[currentRoom.room][selectedDay] = {};
+                    }
+
+                    roomOccupancyStates[currentRoom.room][selectedDay][selectedTime] = {
+                        occupied: true,
+                        course_title: `${occupantName} - Studying`
+                    };
+
+                    populateRooms(selectedTime, selectedDay);
+                    document.getElementById('modal').style.display = 'none';
                 }
             }
         }
+
+        function handleOccupyRoom() {
+            if (currentRoom) {
+                const selectedDay = document.getElementById('day').value;
+                const selectedTime = document.getElementById('time').value;
+
+                // Store the manual state in roomOccupancyStates with time and day
+                if (!roomOccupancyStates[currentRoom.room]) {
+                    roomOccupancyStates[currentRoom.room] = {};
+                }
+                if (!roomOccupancyStates[currentRoom.room][selectedDay]) {
+                    roomOccupancyStates[currentRoom.room][selectedDay] = {};
+                }
+
+                roomOccupancyStates[currentRoom.room][selectedDay][selectedTime] = {
+                    occupied: true,
+                    course_title: ''
+                };
+
+                populateRooms(selectedTime, selectedDay);
+                document.getElementById('modal').style.display = 'none';
+            }
+        }
+
 
         // Close modal when clicking the close button
         document.getElementById('back-button').onclick = function() {
