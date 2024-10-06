@@ -1,0 +1,186 @@
+<html lang="en-US"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Boston College Login</title>
+<link type="image/x-icon" rel="icon" href="https://services.bc.edu/assets/images/icons/favicon.ico">
+<link href="/nidp/images/assets/css/base01.css" rel="stylesheet">
+ <script>
+   'article aside footer header nav section time'.replace(/\w+/g,function(n){document.createElement(n)})
+ </script>
+<!-- Emergency banner start-->
+<script type="text/javascript" src="/nidp/images/assets/js/jquery-2.1.4.min.js"></script>
+
+<style>
+#emergency {
+    position: relative;
+    min-height: 46px;
+}
+
+#emergency #text {
+    color: #333;
+    font-size: 15px;
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+    background-color: #FFF100;
+    height: auto;
+    line-height: 2.6;
+    width: 100%;
+    z-index: 9999999;
+    display: block;
+    position: fixed;
+}
+
+.login {
+    border-radius: 2px;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,.2), 0 16px 48px 0 rgba(0,0,0,.15), 0 0 0 1px rgba(0,0,0,.05);
+    max-width: 448px;
+}
+
+@media only screen and (max-width: 480px) {
+  .login {    
+    padding: 30px 20px;
+  }
+}
+
+#mainLogo {
+    background-size: 100% auto;
+    height: 103px;
+    width: 70%;
+    padding: 12px 8px;
+}
+
+</style>
+
+<script type="text/javascript">
+    $(window).on('load', function() {
+      // Offset nav element
+      $('#nav').affix({
+        offset: 155
+      });
+
+      // add padding element above is affixed
+      $('#nav').on('affix.bs.affix', function() {
+        $('#content').addClass('padded');
+      });
+
+      // and remove again when unaffixed
+      $('#nav').on('affix-top.bs.affix', function() {
+        $('#content').removeClass('padded');
+      });
+
+      // refresh parent window on modal close
+      $('#my-modal').on('hidden.bs.modal', function() {
+        location.reload();
+      });
+
+    });
+
+    function processFeed() {
+        // feed to parse
+        var feed = "https://content.getrave.com/rss/bc/channel2";
+        $.ajax(feed, {
+            accepts:{
+                xml:"application/rss+xml"
+            },
+            dataType:"xml",
+            success:function(data) {
+                console.log("success");
+                $(data).find("item").each(function() {
+                    var el = $(this);
+                    var description = el.find("description").text();
+                    if (description  != 'inactive') {
+                      console.log("active alert");
+                      $('#text').text(description);
+                      $('#emergency').addClass('appear');
+                      $('#emergency').css('display','block');
+                    }
+                    else {
+                      console.log("inactive alert." + description);
+                      $('#emergency').css('display','none');
+                      $('#emergency').removeClass('appear');
+                      $('#text').html('');
+                    }
+                });
+            },
+            complete: setTimeout(function() {processFeed()}, 30000),
+            timeout: 2000
+        });
+    };
+
+    $(document).ready(function() {
+        processFeed();
+    });
+
+  </script>
+
+
+<!-- Emergency banner end-->
+
+
+</head>
+<!--HTML5 doctype for SVG to render correctly -->
+
+
+<body onload="document.IDPLogin.Ecom_User_ID.focus();">
+
+     <!-- Emergency Banner -->
+  <div id="emergency" style="display: none;">
+    <div id="text" class="container-fluid"></div>
+  </div>
+
+<header class="global-header">
+</header>
+<div class="top">
+<div class="bg-image"></div>
+</div>
+<section class="login">
+<form id="fm1" name="IDPLogin" enctype="application/x-www-form-urlencoded" method="POST" action="https://login.bc.edu/nidp/idff/sso?sid=0&amp;sid=0" autocomplete="off">
+<input type="hidden" name="option" value="credential">
+
+
+<input type="hidden" name="target" value="https://services.bc.edu/commoncore/myservices.do">
+
+
+<div id="mainLogo"><a href="https://www.bc.edu/" class="logo">
+ <img src="/nidp/images/assets/image/logo-alt2.png" alt="Boston College logo"></a>
+</div>
+
+<h1>Sign in to continue</h1>
+
+<!--Aria-labels added for accessibility -->
+
+<label for="username">Username:</label>
+<input id="username" autocapitalize="none" aria-labelledby="username" type="text" class="smalltext" value="" name="Ecom_User_ID" placeholder="Username" required="" tabindex="1" accesskey="u" size="25" autocomplete="false"> 
+
+<label for="password">Password:</label>
+<input id="password" name="Ecom_Password" placeholder="Password" required="" tabindex="2" aria-required="true" accesskey="p" type="password" value="" size="25">
+
+<div class="msg"><a href="https://services.bc.edu/apc/authenticate!displayInput">Forgot your password?</a>
+</div>
+
+<!--Login changed from input to button type -->
+<button class="btn custom" type="submit" accesskey="l" value="LOGIN" tabindex="4">Sign in</button>
+
+</form>
+
+<div style="background: #faf6b2;border: 1px solid #fcdc98;color: #555;margin-top: 13px;display: table;" class="alert alert-info">
+
+<p> <strong>EagleApps Updates:</strong></p>
+
+EagleApps will be unavailable every Tuesday from 7:00 PM to 9:00 PM EST and on Sunday from 2:00 AM to 4:00 AM EST for releases and maintenance.
+
+</div>
+
+<div class="note notice"><strong>Need help?</strong> Call the Help Center at 617-552-HELP (4357).</div>
+<div class="note">Access to the Boston College technological and information resources is a privilege available only to authorized individuals. This privilege requires that all users be responsible for the protection of University resources and that all use be in accordance with the <a href="https://services.bc.edu/bc/common/common/SecurityAgreement.html">Boston College Technology Use Agreement</a>
+</div>
+</section>
+
+
+
+</body></html>
